@@ -1,37 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
+    <meta name="description" content="Bienvenue chez Orinoco, nous nous démarquons des grands site de e-commerce en créant des applications thématiques ne vendant qu’un seul groupe de produits." />
     <meta property="og:url" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Orinoco - Votre entreprise de commerce en ligne spécialisé en Ours en peluche!"/>
     <meta property="og:description" content="Bienvenue chez Orinoco, nous nous démarquons des grands site de e-commerce en créant des applications thématiques ne vendant qu’un seul groupe de produits."/>
-    <title>Orinoco - Ours en peluche faits à la main</title>
-    <meta name="description" content="Bienvenue chez Orinoco, nous nous démarquons des grands site de e-commerce en créant des applications thématiques ne vendant qu’un seul groupe de produits." />
-
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-</head>
-<body>
-    <div class="page-container">
-        <header class="bloc bgc-pink l-bloc" id="bloc-0">
-            <div role="navigation" class="container bloc-sm">
-                <nav class="navbar row">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html"><img src="./images/logo.png" alt="Ours en peluche logo Orinoco e-commerce" style="max-width: 20%"/></a>
-                    </div>
-                    <div class="navbar-cart">
-                        <ul class="navbar-item">
-                            <li>
-                                <a class="cart-link" href="panier.html"><i class="fas fa-shopping-cart fa-1x"></i>Panier (<span id="indexPanier"></span>)</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </header>
-        <main>
     
+    <title>Orinoco - Ours en peluche faits à la main</title>
+    
+    <link rel="stylesheet" type="text/css" href="./script/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #F8BBD0;">
+          <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="./images/logo.png" style="height: 4vw;" alt="Ours en peluche logo Orinoco e-commerce"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">E-boutique</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="panier.html"><i class="fas fa-shopping-cart"></i>
+                            MON PANIER
+                        </a>
+                    </li>
+                </ul>
+            </div>
+          </div> 
+        </nav>
+  
+    </header>
+  
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">E-BOUTIQUE PRODUIT</h1>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row" id="detailPhoto">
+                <!-- Photo -->
+            </div>
+      </div>
+    
+    <!-- Footer -->
+    <footer class="py-5 fixed-bottom" style="background-color: #F8BBD0;">
+        <div class="container">
+            <p class="m-0 text-center text-black">Copyright &copy; Orinours by Orinoco 2020</p>
+            <p class="m-0 text-center text-black">Projet 5 - Parcours Developpeur Web - OpenClassrooms</p>
+        </div>
+    
+    </footer>
+  
+    
+    <script src="script/jquery/jquery-3.5.1.min.js"></script>
+    <script src="script/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./script/produit.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 </body>
+
 </html>
