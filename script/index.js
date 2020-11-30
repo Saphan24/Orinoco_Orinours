@@ -44,7 +44,6 @@ reponse.forEach(element => {
     imageUrl.setAttribute("src", element.imageUrl);
     descriptionToutesPeluches.setAttribute("class", "description_toutes_peluches card-body");
     name.setAttribute("class", "name card-title");
-    nameLink.setAttribute("href", "#");
     description.setAttribute("class", "description card-text");
     boutonDetails.setAttribute("class", "bouton_détails text-center mb-auto");
     bouton.href = "produit.html?id=" + element._id;
