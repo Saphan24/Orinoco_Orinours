@@ -1,16 +1,19 @@
 /* Lien vers la page index HTML */
+
 /* création structure présentation produit peluche index.html */
-//let présentation = document.getElementById("présentation");
 let myPresentation = document.createElement('h2');
 
 
-//let listeProduit = document.getElementById("listeProduit");
 /*Lien avec l'API */
 fetch("http://localhost:3000/api/teddies/")
 .then(reponse => reponse.json())
 .then(reponse => {
-console.log(reponse)
-reponse.forEach(element => {
+teddies(reponse);
+})
+
+function teddies(reponse) {
+    console.log(reponse)
+    reponse.forEach(element => {
 
     myPresentation.textContent = "Votre boutique en ligne d'ours en peluche faits à la main"
     présentation.appendChild(myPresentation);
@@ -48,15 +51,14 @@ reponse.forEach(element => {
     boutonDetails.setAttribute("class", "bouton_détails text-center mb-auto");
     bouton.href = "produit.html?id=" + element._id;
     
-    /* Contenues des balises index.html bloc-2-produit */
-    
+    /* Contenues des balises index.html */
     name.textContent = element.name;
     price.textContent = euro.format(element.price/100);
     description.textContent = element.description;
     imageUrl.textContent = element.imageUrl;
     boutonDetails.textContent = "En savoir plus";
     
-    /* Agencement des éléments dans index.html bloc-2-produit */
+    /* Agencement des éléments dans index.html */
     listeProduit.appendChild(article);
     article.appendChild(photoPeluche);
     photoPeluche.appendChild(card);
@@ -69,4 +71,4 @@ reponse.forEach(element => {
     descriptionToutesPeluches.appendChild(bouton);
     bouton.appendChild(boutonDetails);
     });
-})
+}

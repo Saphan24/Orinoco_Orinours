@@ -1,4 +1,7 @@
+  /* Lien avec la page produit.html */
+
 let detailPhoto = document.getElementById("detailPhoto");
+
 const search = window.location.search;
 const param = new URLSearchParams(search);
 const id = param.get("id");
@@ -11,8 +14,13 @@ if(!localStorage.getItem("panier")){
 fetch("http://localhost:3000/api/teddies/"+id)
 .then(reponse => reponse.json())
 .then(element => {
+idTeddies(element);
+})
+
+function idTeddies(element) {
     console.log(element)
 
+    /* FORMAT en euro des prix */
     const euro = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -20,7 +28,6 @@ fetch("http://localhost:3000/api/teddies/"+id)
     });
 
     /* création produit.html photo */
-
     let detailContenuPhoto = document.createElement("div");
     let card = document.createElement("div");
     let cardBody = document.createElement("div");
@@ -28,7 +35,6 @@ fetch("http://localhost:3000/api/teddies/"+id)
     let photoProduit = document.createElement("img");
 
     /* Attribution des classes produit.html */
-
     detailContenuPhoto.setAttribute("class", "detail_contenu col-12 col-lg-6");
     card.setAttribute("class", "card bg-light mb-3");
     cardBody.setAttribute("class", "card-body");
@@ -37,7 +43,6 @@ fetch("http://localhost:3000/api/teddies/"+id)
     photoProduit.setAttribute("src", element.imageUrl);
 
     /* Agencement des éléments produit.html */
-
     detailPhoto.appendChild(detailContenuPhoto);
     detailContenuPhoto.appendChild(card);
     card.appendChild(cardBody);
@@ -45,7 +50,6 @@ fetch("http://localhost:3000/api/teddies/"+id)
     photoLink.appendChild(photoProduit);
 
     /* création produit.html detailProduit */
-
     let detailProduit = document.createElement("div");
     let detailProduitCard = document.createElement("div");
     let detailProduitCardBody = document.createElement("div");
@@ -58,7 +62,9 @@ fetch("http://localhost:3000/api/teddies/"+id)
     let detailPanier = document.createElement("div");
     let detailAjoutPanier = document.createElement("a");
     let detailIconeAjoutPanier = document.createElement("i");
-    
+
+
+    /* Ajout d'attributs à produit.html */
     detailProduit.setAttribute("class", "detail_produit col-12 col-lg-6 add_to_cart_block");
     detailProduitCard.setAttribute("class", "card bg-light mb-3");
     detailProduitCardBody.setAttribute("class", "card-body");
@@ -72,11 +78,15 @@ fetch("http://localhost:3000/api/teddies/"+id)
     detailPanier.setAttribute("class", "form-group");
     detailAjoutPanier.setAttribute("class", "ajout_panier btn btn-success btn-lg btn-block text-uppercase");
     detailIconeAjoutPanier.setAttribute("class", "icone_chariot fa fa-shopping-cart");
+
+    /* Création d'un menu déroulant de couleurs */
     element.colors.forEach(couleur => {
         const option = document.createElement("option");
         option.textContent = couleur;
         detailProduitColorChoix.appendChild(option);
     });
+
+    /* Agencement des éléments dans produit.html */
     detailPhoto.appendChild(detailProduit);
     detailProduit.appendChild(detailProduitCard);
     detailProduitCard.appendChild(detailProduitCardBody);
@@ -90,13 +100,13 @@ fetch("http://localhost:3000/api/teddies/"+id)
     detailPanier.appendChild(detailAjoutPanier);
     detailAjoutPanier.appendChild(detailIconeAjoutPanier);
 
-
+    /* Ajout de contenu aux balises produit.html */
     detailPrix.textContent = euro.format(element.price/100);
     detailProduitColor.textContent = 'Couleur';
     detailSelectColor.textContent = 'Selectionner';
     detailIconeAjoutPanier.textContent = ' AJOUTER AU PANIER ';
     
-    /* Ajout de description */
+    /* Ajout de description au balise produit.html */
 
     let descriptionBlocProduit = document.createElement("div");
     let descriptionProduit = document.createElement("div");
@@ -122,7 +132,6 @@ fetch("http://localhost:3000/api/teddies/"+id)
     descriptionProduitText.textContent = element.description;
 
     /* Ajout produit au panier */
- 
     detailAjoutPanier.addEventListener("click", function(){
         const panier = JSON.parse(localStorage.getItem("panier"));
         panier.push(element);
@@ -131,6 +140,4 @@ fetch("http://localhost:3000/api/teddies/"+id)
         alert("Cet article a été ajouté dans votre panier");
         location.reload();
     })
-})
-
-
+}

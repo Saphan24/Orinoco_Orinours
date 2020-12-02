@@ -1,3 +1,4 @@
+/* Lien avec la page panier.html */
 let recapTableauPanier = document.getElementById("recap-panier");
 
 let panier = JSON.parse(localStorage.getItem("panier"));
@@ -38,7 +39,7 @@ if(panier != null && panier.length > 0) {
     headerLineTab.appendChild(colPrix);
     headerLineTab.appendChild(colDelArticle);
 
-    /* Entêtes du tableau */
+    /* Entêtes du tableau panier.html */
     colPhotoArticle.textContent = "";
     colProduitNom.textContent = "Article";
     colNomVide.textContent = "";
@@ -46,8 +47,12 @@ if(panier != null && panier.length > 0) {
     colDelArticle.textContent = "";
 
     console.log(panier);
+
+    /* Boucle FOR pour affichage des articles dans le panier */
     for (let i = 0; i < panier.length; i++) {
         product.push(panier[i]._id);
+
+        /* FORMAT en euro des prix */
         const euro = new Intl.NumberFormat('fr-FR', {
             style: 'currency',
             currency: 'EUR',
@@ -72,7 +77,6 @@ if(panier != null && panier.length > 0) {
         photoArticle.setAttribute("src", panier[i].imageUrl);
         photoArticle.setAttribute("width","50");
         photoArticle.setAttribute("height","50");
-        
         prixArticle.setAttribute("class", "text-right");
         delArticle.setAttribute("class", "text-right");
         btDelArticle.setAttribute("class", "btn btn-sm btn-danger");
@@ -90,27 +94,28 @@ if(panier != null && panier.length > 0) {
         delArticle.appendChild(btDelArticle);
         btDelArticle.appendChild(removeArticle);
 
-
+        /* Ajout du contenu prix au tableau panier.html */
         nomArticle.textContent = panier[i].name;
         console.log(panier[i].name);
 
         prixArticle.textContent = euro.format(panier[i].price/100);
-        
+
+        /* Supprimer un produit du panier */
         removeArticle.addEventListener("click", (event) => {this.deleteArticle(i);})
 
     };
 
     /* suppression ligne article */
-
     deleteArticle = (i) => {
         panier.splice(i, 1);
-            localStorage.clear();
-            localStorage.setItem("panier", JSON.stringify(panier));
-            window.location.reload();
+        localStorage.clear();
+        /* Mise à jour du nouveau panier après la suppression de l'article */
+        localStorage.setItem("panier", JSON.stringify(panier));
+        /* Raffraichissement de la page et affichage de la suppression de l'utilisateur */
+        window.location.reload();
     };
 
     /* création de la ligne du tableau:  TOTAL */
-
     let ligneTotalArticle = document.createElement("tr");   
     let colLigneTotalArticle1 = document.createElement("td");
     let colLigneTotalArticle2 = document.createElement("td");   
@@ -121,12 +126,12 @@ if(panier != null && panier.length > 0) {
     let colLigneTotalArticle4 = document.createElement("td");
 
     /* Ajout d'attribut à la ligne Total */
-
     ligneTotalArticle.setAttribute("id", "ligne-total");
     colLigneTotalArticle3.setAttribute("class", "text-right");
     colLigneTotal.setAttribute("class", "text-right");
     colLigneTotal.setAttribute("id", "total");
 
+    /* Agencement de la ligne total panier.html */
     lineArticle.appendChild(ligneTotalArticle); 
     ligneTotalArticle.appendChild(colLigneTotalArticle1);
     ligneTotalArticle.appendChild(colLigneTotalArticle2);   
@@ -136,7 +141,7 @@ if(panier != null && panier.length > 0) {
     colLigneTotal.appendChild(strongColLigneTotal);
     ligneTotalArticle.appendChild(colLigneTotalArticle4);   
 
-
+    /* Ajout du contenu */
     strongTotalArticle.textContent = "TOTAL";
 
     /* FORMAT en euro des prix */
@@ -146,62 +151,65 @@ if(panier != null && panier.length > 0) {
         minimumFractionDigits: 2
     });
 
-    /* Calcul en addition du total */
-    
+    /* Calcul l'addition du total */
     panier.forEach((panier) => {
         total += panier.price / 100;
     });
 
-    /* Affichage prix total à payer */ 
+    /* Affichage contenu prix total à payer */ 
     console.log(euro.format(total));
     strongColLigneTotal.textContent = euro.format(total);
 };
 
 /**************** FORMULAIRE DU PANIER *******************/
 
-function verification() {
+function verification() { // Vérification des entrées dans le formulaire
     
     /* Construction d'une expression régulière RegEx */
     let checkNumber = /[0-9]/;
     let checkMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let checkSpecialCharacter = /[§!@#$%^&*().?":{}|<>]/;
+
+    /* Récupération des données du formulaire */
     let nom = document.getElementById("nom").value;
     let prenom = document.getElementById("prenom").value;
     let mail = document.getElementById("mail").value;
     let adresse = document.getElementById("adresse").value;
     let ville = document.getElementById("ville").value;
 
-    if( nom == "" || checkNumber.test(nom) == true || checkSpecialCharacter.test(nom) == true ) {
+    /* Test des différentes entrées du formulaire */
+    if( nom == "" || checkNumber.test(nom) == true || checkSpecialCharacter.test(nom) == true ) { // Test du nom
         alert("Veuillez entrer votre nom!");
         return false;
     } else {
         console.log("nom OK");
     }
-    if( prenom == "" || checkNumber.test(prenom) == true || checkSpecialCharacter.test(prenom) == true ) {
+    if( prenom == "" || checkNumber.test(prenom) == true || checkSpecialCharacter.test(prenom) == true ) { // Test du prénom
         alert("Veuillez entrer votre prenom!");
         return false;
     } else {
         console.log("prénom OK");
     }
-    if( checkMail.test(mail) == false ) {
+    if( checkMail.test(mail) == false ) { // Test du mail
         alert("Veuillez entrer votre adresse électronique!");
         return false;
     } else {
         console.log("mail OK");
     }
-    if( checkSpecialCharacter.test(adresse) == true || adresse == "" )  {
+    if( checkSpecialCharacter.test(adresse) == true || adresse == "" )  { // Test de l'adresse 
         alert("Veuillez vérifier les informations concernant votre adresse postale!");
         return false;
     } else {
         console.log("adresse OK");
     }
-    if( checkSpecialCharacter.test(ville) == true || ville == "" || checkNumber.test(ville) == true )  {
+    if( checkSpecialCharacter.test(ville) == true || ville == "" || checkNumber.test(ville) == true )  { // Test de la ville
         alert("Veuillez entrer votre ville correctement!");
         return false;
     } else {
         console.log("ville OK");
     }
-    //Si le formulaire est bon => création de l'objet contact
+    
+    /* Si le formulaire est bon => création de l'objet contact */
     
     const contact = {
         lastName: nom,
@@ -217,21 +225,17 @@ function verification() {
 // Vérification du panier
 
 function checkPanier() {
-    /* verification du panier s'il y a 1 produit */
+    // verification du panier s'il y a 1 produit 
     let panier = JSON.parse(localStorage.getItem("panier"));
     
-    /* Si le panier est vide ou null */
-    if (panier.length < 1 || panier == null) { 
-        alert("Votre panier est vide");
-        console.log("Le panier est vide");
+    //Si le panier est vide ou null 
+    if (panier == null || panier.length < 1) { 
         return false;
     } else {
-        console.log("Le panier n'est pas vide");
         return true;
     }
 };
 
-checkPanier();
 
 function commander (){
     let url = 'http://localhost:3000/api/teddies/order';
@@ -245,8 +249,12 @@ function commander (){
             alert('Attention: \n Une erreur s\'est produite dans le formulaire');
             return;
         }
-        console.log(verif, product);
-
+        const verifPanier = checkPanier();
+        if(!verifPanier) {
+            alert("Votre panier est vide");
+            console.log("Le panier est vide");
+            return;
+        }
         fetch( url, {
             method: 'POST', 
             body: JSON.stringify({products: product, contact: verif}),
